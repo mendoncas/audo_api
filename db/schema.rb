@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_12_235612) do
+ActiveRecord::Schema.define(version: 2021_07_14_125334) do
 
   create_table "completed_disciplines", force: :cascade do |t|
     t.integer "student_id", null: false
@@ -21,9 +21,25 @@ ActiveRecord::Schema.define(version: 2021_07_12_235612) do
     t.index ["student_id"], name: "index_completed_disciplines_on_student_id"
   end
 
+  create_table "dependencies", force: :cascade do |t|
+    t.integer "discipline_id"
+    t.integer "dependency_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["discipline_id"], name: "index_dependencies_on_discipline_id"
+  end
+
   create_table "disciplines", force: :cascade do |t|
     t.string "name", null: false
     t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "semester_id", null: false
+    t.index ["semester_id"], name: "index_disciplines_on_semester_id"
+  end
+
+  create_table "semesters", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -36,4 +52,5 @@ ActiveRecord::Schema.define(version: 2021_07_12_235612) do
 
   add_foreign_key "completed_disciplines", "disciplines"
   add_foreign_key "completed_disciplines", "students"
+  add_foreign_key "disciplines", "semesters"
 end

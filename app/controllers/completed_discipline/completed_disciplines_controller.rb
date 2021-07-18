@@ -4,13 +4,18 @@ class CompletedDiscipline::CompletedDisciplinesController < ApplicationControlle
   end
 
   def create
-    @completed_discipline = CompletedDiscipline.new(student: Student.find_by(id: params[:student_id]),
-                                                    discipline: Discipline.find_by(id: params[:discipline_id]))
+    @completed = CompletedDiscipline.new(student: Student.find_by(id: params[:student_id]),
+                                         discipline: Discipline.find_by(id: params[:discipline_id]))
 
-    if @completed_discipline.save
-      render json: { message: 'Disciplina completa com sucesso!', completed_discipline: @completed_discipline }
+    if @completed.student.can_complete(params[:discipline_id])
+      if @completed.save
+        render json: { message: 'Disciplina completa com sucesso!', completed_discipline: @completed }
+      else
+        render json: { message: 'Houve uma falha ao completar essa disciplina.' }
+      end
     else
-      render json: { message: 'Houve uma falha ao completar essa disciplina.' }
+      render json: { message:
+        "#{@completed.student.name} não compre os requisitos para completar #{@completed.discipline.name}" }
     end
   end
 end

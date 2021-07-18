@@ -3,7 +3,13 @@ Rails.application.routes.draw do
 
   namespace :discipline do
     get '/', to: 'disciplines#index'
+    get '/graph', to: 'disciplines#graph'
     post '/', to: 'disciplines#create'
+    post '/dependency', to: 'dependencies#create'
+  end
+
+  namespace :semester do
+    post '/', to: 'semesters#create'
   end
 
   namespace :student do
