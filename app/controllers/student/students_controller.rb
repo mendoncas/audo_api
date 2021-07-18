@@ -13,6 +13,10 @@ class Student::StudentsController < ApplicationController
     end
   end
 
+  def recommendation
+    render json: Student.find_by(id: params[:student_id]).completable_disciplines
+  end
+
   private
 
   def student_params

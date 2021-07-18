@@ -1,11 +1,16 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-
   namespace :discipline do
-    get '/', to: 'disciplines#index'
+    get '/index', to: 'disciplines#index'
     get '/graph', to: 'disciplines#graph'
     post '/', to: 'disciplines#create'
-    post '/dependency', to: 'dependencies#create'
+    put '/:discipline_id', to: 'disciplines#update'
+    delete '/:discipline_id', to: 'disciplines#delete'
+
+    scope '/dependency' do
+      get '/:discipline_id', to: 'dependencies#show_by_discipline'
+      post '/', to: 'dependencies#create'
+      delete '/:dependency_id', to: 'dependencies#delete'
+    end
   end
 
   namespace :semester do
@@ -14,11 +19,13 @@ Rails.application.routes.draw do
 
   namespace :student do
     get '/', to: 'students#index'
+    get '/recommendation/:student_id', to: 'students#recommendation'
     post '/', to: 'students#create'
   end
 
   namespace :completed_discipline do
     get '/', to: 'completed_disciplines#index'
+    get '/:student_id', to: 'completed_disciplines#show_by_student'
     post '/', to: 'completed_disciplines#create'
   end
 end

@@ -10,18 +10,15 @@ class Discipline < ApplicationRecord
     }}"
   end
 
-  # algoritmo de busca depth-first
+  # algoritmo de busca depth-first percorrendo a tabela de disciplinas e suas dependências
   def depends_on(dependency_id, set = [])
     set.push(id)
 
     dependencies.each do |dep|
-      if dep.dependency_id == dependency_id
-        return true
-      else
-        dep.discipline.depends_on(dependency_id, set) unless set.include? dep.discipline_id
-      end
-    end
+      return true if dep.dependency_id == dependency_id
 
+      dep.discipline.depends_on(dependency_id, set) unless set.include? dep.discipline_id
+    end
     false
   end
 end
