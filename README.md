@@ -4,4 +4,5 @@
 O servidor pode ser preparado e iniciado a partir da dockerfile
 
 ## Docs
-A documentação da API pode ser acessada importando o arquivo de workspace insomnia_docs.json
+A workspace do insomnia gerada ao longo do desenvolvimento do projeto pode ser importada deste aquivo [docs/inisomnia_docs](https://github.com/mendoncas/audo_api/blob/master/docs/insomnia_docs.json)
+As rotas da aplicação também estão descritas na [wiki](https://github.com/mendoncas/audo_api/wiki)
